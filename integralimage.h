@@ -15,6 +15,8 @@
 
 #define HEIGHT 480
 #define OVERLAP_WIDTH 80
+#define BLOCKDIMX 32
+#define BLOCKDIMY 32
 #define getMoment std::chrono::high_resolution_clock::now()
 using namespace std;
 using namespace cv;
@@ -57,7 +59,7 @@ public:
     void d_mem_init();
 
     void cudaMemoryInit(int cols, int rows);
-    void prefixSum2D();
+    void prefixSum2D(int *d_origin_image);
 
     // De-allocates all the memory allocated on the host and the device
     void cudaCutsFreeMem();
@@ -68,10 +70,15 @@ public:
     /*************************************************
      * n-edges and t-edges                          **
      * **********************************************/
+
     int width, height, image_size, size_int;
+    int horizon_width, vertical_width, horizon_size, vertical_size;
     int *d_origin_image, *d_result_phase1, *d_result_phase2, *d_result_phase3;
+    int *d_horizon_src, *d_horizon_dst, *d_vertical_src, *d_vertical_dst;
 
     int *h_origin_image, *h_result_phase1, *h_result_phase2, *h_result_phase3;
+    int *h_horizon_src, *h_horizon_dst, *h_vertical_src, *h_vertical_dst;
+
 
 
 };
